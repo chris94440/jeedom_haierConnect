@@ -19,6 +19,12 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
 function haierConnect_install() {
+    message::add($pluginId, __('haierConnect_install', __FILE__));
+}
+
+// Fonction exécutée automatiquement après la mise à jour du plugin
+function haierConnect_update() {
+     message::add($pluginId, __('haierConnect_update', __FILE__));
     $pluginId='haierConnect';
     $dependencyInfo = haierConnect::dependancy_info();
     if (!isset($dependencyInfo['state'])) {
@@ -31,10 +37,6 @@ function haierConnect_install() {
             message::add($pluginId, __('Cette mise à jour nécessite de réinstaller les dépendances même si elles sont marquées comme OK', __FILE__));
         }
     }
-}
-
-// Fonction exécutée automatiquement après la mise à jour du plugin
-function haierConnect_update() {
 }
 
 // Fonction exécutée automatiquement après la suppression du plugin
