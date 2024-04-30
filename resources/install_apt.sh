@@ -5,7 +5,7 @@ fi
 if [ -d ../../plugins/haierConnect ]; then
   cd ../../plugins/haierConnect
 else
-  echo "Ce script doit être appelé depuis .../core/data"
+  echo "Ce script doit être appelé depuis .../core/data ChD"
   exit
 fi
 TMP_FILE=/tmp/jeedom/haierConnect/post-install_haierConnect_bashrc
