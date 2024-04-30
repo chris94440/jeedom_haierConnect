@@ -23,8 +23,9 @@ class haierConnect extends eqLogic {
   const PYTHON_PATH=__DIR__.'/../../resources/venv/versions/3.11.9/bin/python3.11';
 
   public static function dependancy_install() {
+      log::add(__CLASS__,'info',__FUNCTION__ . ' -> remove log _update');
       log::remove(__CLASS__ . '_update');
-      log::add(__CLASS__,'info',__FUNCTION__ . ' -> '.__DIR__ . '/../../resources/install_#stype#.sh ');
+      log::add(__CLASS__,'info',__FUNCTION__ . ' return : ' . json_encode(array('script' => __DIR__ . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder(__CLASS__) . '/dependency', 'log' => log::getPathToLog(__CLASS__ . '_update'))));
       return array('script' => __DIR__ . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder(__CLASS__) . '/dependency', 'log' => log::getPathToLog(__CLASS__ . '_update'));
   }
   
