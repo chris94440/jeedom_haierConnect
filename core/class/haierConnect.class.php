@@ -19,6 +19,33 @@
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class haierConnect extends eqLogic {
+
+  const PYTHON_PATH=__DIR__.'/../../resources/venv/versions/3.11.9/bin/python3.11';
+
+  public static function dependancy_install() {
+      log::remove(__CLASS__ . '_update');
+      log::add(__CLASS__,'info',__FUNCTION__ . ' -> '.__DIR__ . '/../../resources/install_#stype#.sh ')
+      return array('script' => __DIR__ . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder(__CLASS__) . '/dependency', 'log' => log::getPathToLog(__CLASS__ . '_update'));
+  }
+  
+  public static function dependancy_info() {
+      $return = array();
+      $return['log'] = log::getPathToLog(__CLASS__ . '_update');
+      $return['progress_file'] = jeedom::getTmpFolder(__CLASS__) . '/dependency';
+      if (file_exists(jeedom::getTmpFolder(__CLASS__) . '/dependency')) {
+          $return['state'] = 'in_progress';
+      } else {
+          if (exec(system::getCmdSudo() . system::get('cmd_check') . '-Ec "python3\-dev|python3.11\-venv"') < 2) {
+              $return['state'] = 'nok';
+          } elseif (exec(system::getCmdSudo() . self::PYTHON_PATH . ' -m pip list | grep -Ewc "pyhOn|aiohttp|pyserial"') < 3) {
+              $return['state'] = 'nok';
+          } else {
+              $return['state'] = 'ok';
+          }
+      }
+      return $return;
+  }
+  
   /*     * *************************Attributs****************************** */
 
   /*
